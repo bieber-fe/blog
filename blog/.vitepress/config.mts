@@ -50,8 +50,8 @@ export default defineConfig({
         lastUpdated: {
             text: "更新时间",
             formatOptions: {
-                dateStyle: "full",
-                timeStyle: "medium"
+                dateStyle: "short",
+                timeStyle: "short"
             }
         },
         docFooter: {
