@@ -1,0 +1,12 @@
+{
+    "devDependencies": {
+        "inquirer": "^12.5.2",
+        "vitepress": "^1.6.3"
+    },
+    "scripts": {
+        "git": "bash git-push.sh",
+        "dev": "vitepress dev blog --open",
+        "build": "vitepress build blog",
+        "preview": "vitepress preview blog"
+    }
+}

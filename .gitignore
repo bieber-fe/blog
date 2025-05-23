@@ -1,0 +1,11 @@
+
+.idea
+.DS_Store
+/dist
+
+node_modules/
+package-lock.json
+cache
+
+设计.md
+git-push.sh
