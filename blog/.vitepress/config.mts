@@ -23,11 +23,6 @@ export default defineConfig({
         outline: {
             label: "目录"
         },
-        algolia: {
-            appId: "",
-            apiKey: "",
-            indexName: ""
-        },
         search: {
             provider: "local",
             options: {
@@ -41,7 +36,8 @@ export default defineConfig({
                         resetButtonTitle: "清除查询条件",
                         footer: {
                             selectText: "选择",
-                            navigateText: "切换"
+                            navigateText: "切换",
+                            closeText: "退出"
                         }
                     }
                 }
