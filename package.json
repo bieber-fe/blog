@@ -1,15 +1,16 @@
 {
-    "devDependencies": {
-        "inquirer": "^12.5.2",
-        "vitepress": "^1.6.3"
-    },
-    "scripts": {
-        "git": "bash git-push.sh",
-        "dev": "vitepress dev blog --open",
-        "build": "vitepress build blog",
-        "preview": "vitepress preview blog"
-    },
-    "dependencies": {
-        "canvas-confetti": "^1.9.3"
-    }
+  "devDependencies": {
+    "@giscus/vue": "^3.1.1",
+    "inquirer": "^12.5.2",
+    "prettier": "^3.5.3",
+    "vitepress": "^1.6.3"
+  },
+  "scripts": {
+    "dev": "vitepress dev blog --open",
+    "build": "vitepress build blog",
+    "preview": "vitepress preview blog"
+  },
+  "dependencies": {
+    "canvas-confetti": "^1.9.3"
+  }
 }

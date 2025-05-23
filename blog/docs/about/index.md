@@ -12,3 +12,9 @@
 
 这个知识库不仅是我积累知识的仓库，更是我进行知识整理、总结与创新的平台。通过不断地学习与输入，我将所学内容进行深度加工，
 形成独特的见解与思维方式，为个人发展注入源源不断的动力。
+
+## 关于我
+
+ - GitHub：https://github.com/bieber-fe
+ - Gitee：https://gitee.com/fe-bieber
+ - 掘金：https://juejin.cn/user/254742426300760/posts

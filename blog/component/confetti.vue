@@ -6,7 +6,7 @@ if (inBrowser) {
     /* 纸屑 */
     confetti({
         particleCount: 100,
-        spread: 170,
+        spread: 70,
         origin: { y: 0.6 }
     })
 }

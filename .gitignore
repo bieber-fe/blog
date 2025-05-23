@@ -5,6 +5,5 @@
 
 node_modules/
 cache
+*.local
 
-设计.md
-git-push.sh

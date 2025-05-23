@@ -17,7 +17,7 @@ const feSidebar = {
             // collapsed: false,
             items: [
                 { text: "文章1", link: "/docs/front-end/base" },
-                { text: "文章2", link: "/api-examples" },
+                { text: "样式重置", link: "/docs/front-end/html-css/reset" },
                 { text: "文章3", link: "/api-examples" }
             ]
         },
