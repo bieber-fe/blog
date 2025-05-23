@@ -8,5 +8,8 @@
         "dev": "vitepress dev blog --open",
         "build": "vitepress build blog",
         "preview": "vitepress preview blog"
+    },
+    "dependencies": {
+        "canvas-confetti": "^1.9.3"
     }
 }

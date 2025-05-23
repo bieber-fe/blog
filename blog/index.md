@@ -30,3 +30,9 @@ features:
     title: 共享
     details: 任何人都可以一起补充文库，欢迎你的来到
 ---
+
+<script setup>
+import confetti from "./component/confetti.vue"
+</script>
+
+<confetti />
