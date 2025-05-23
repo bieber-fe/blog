@@ -15,11 +15,14 @@ export default defineConfig({
             }
         ]
     ],
-    lastUpdated: true,
+
     themeConfig: {
         logo: "/logo.svg",
         nav: nav,
         sidebar,
+        outline: {
+            label: "目录"
+        },
         algolia: {
             appId: "",
             apiKey: "",
@@ -44,7 +47,13 @@ export default defineConfig({
                 }
             }
         },
-        lastUpdatedText: "最后更新",
+        lastUpdated: {
+            text: "更新时间",
+            formatOptions: {
+                dateStyle: "full",
+                timeStyle: "medium"
+            }
+        },
         docFooter: {
             prev: "上一页",
             next: "下一页"
