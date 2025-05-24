@@ -1,4 +1,4 @@
-// 评论组件
+<!-- layout.vue -->
 <template>
   <Layout>
     <template #doc-footer-before> </template>
@@ -6,15 +6,15 @@
       <div style="margin-top: 24px">
         <Giscus
           :key="page.filePath"
-          repo="*"
-          repo-id="*"
-          category="*"
-          category-id="*"
+          repo="bieber-fe/blog-comments"
+          repo-id="R_kgDOOvq_Tg"
+          category="Announcements"
+          category-id="DIC_kwDOOvq_Ts4CqiPR"
           mapping="pathname"
           strict="0"
           reactions-enabled="1"
           emit-metadata="0"
-          input-position="bottom"
+          input-position="top"
           lang="zh-CN"
           crossorigin="anonymous"
           :theme="isDark ? 'dark' : 'light'"

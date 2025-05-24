@@ -1,35 +1,43 @@
 // 前端路由
 
 const feNav = {
-    text: "前端",
-    items: [
-        { text: "前端基础", link: "/docs/front-end" },
-        { text: "框架与工具", link: "/docs/frame-tools" },
-        { text: "浏览器", link: "/docs/browser" },
-        { text: "工程化实践", link: "/docs/frontend-engineering" },
-        { text: "性能优化", link: "/docs/optimize" }
-    ]
+  text: '前端技术',
+  items: [
+    { text: 'JavaScript', link: '/api-examples' },
+    { text: 'CSS/预处理器', link: '/docs/front-end/html-css/reset' },
+    { text: '框架', link: '/api-examples' },
+    { text: '工程化', link: '/api-examples' },
+    { text: '性能优化', link: '/api-examples' },
+  ],
 }
 const feSidebar = {
-    "/docs/front-end/": [
-        {
-            text: "html/css",
-            // collapsed: false,
-            items: [
-                { text: "文章1", link: "/docs/front-end/base" },
-                { text: "样式重置", link: "/docs/front-end/html-css/reset" },
-                { text: "文章3", link: "/api-examples" }
-            ]
-        },
-        {
-            text: "Javascript",
-            items: [
-                { text: "文章1", link: "/docs/front-end/base" },
-                { text: "文章1", link: "/api-examples" },
-                { text: "文章1", link: "/api-examples" }
-            ]
-        }
-    ]
+  '/docs/front-end/': [
+    {
+      text: 'JavaScript',
+      collapsed: false,
+      items: [{ text: 'demo1', link: '/api-examples' }],
+    },
+    {
+      text: 'CSS/预处理器',
+      collapsed: true,
+      items: [{ text: '样式重置reset.css', link: '/docs/front-end/html-css/reset' }],
+    },
+    {
+      text: '框架',
+      collapsed: true,
+      items: [{ text: 'demo1', link: '/api-examples' }],
+    },
+    {
+      text: '工程化',
+      collapsed: true,
+      items: [{ text: 'demo1', link: '/api-examples' }, ,],
+    },
+    {
+      text: '性能优化',
+      collapsed: true,
+      items: [{ text: 'demo1', link: '/api-examples' }],
+    },
+  ],
 }
 
 export { feNav, feSidebar }
