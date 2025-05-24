@@ -2,21 +2,23 @@ import { defineConfig } from 'vitepress'
 import { nav, sidebar } from '../router/index'
 
 export default defineConfig({
+  lang: 'zh-Hans',
   title: 'BieFlow知识库',
   description: 'A VitePress Site',
   base: '/blog/',
+  srcDir: 'docs', // 源目录
   head: [
     [
       'link',
       {
         rel: 'icon',
-        href: 'https://cn.vitejs.dev/viteconf.svg',
+        href: '/blog/code.png',
       },
     ],
   ],
   themeConfig: {
-    logo: '/logo.svg',
-    nav: nav,
+    // logo: '/code.png',
+    nav,
     sidebar,
     outline: {
       label: '目录',

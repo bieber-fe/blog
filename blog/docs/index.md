@@ -2,12 +2,12 @@
 layout: home
 
 hero:
-  name: "BieFlow"
-  text: "这个知识库不是收藏夹，是「知识外挂」"
+  name: 'BieFlow'
+  text: '这个知识库不是收藏夹，是「知识外挂」'
   tagline: 🚀 随时召唤，拒绝白学
   image:
-    src: /logo.svg
-    alt: logo
+    src: /code.png
+    alt: code
   actions:
     - theme: brand
       text: 开始使用
@@ -31,9 +31,9 @@ features:
     details: 任何人都可以一起补充文库，欢迎你的来到
 ---
 
-
 <script setup>
-import confetti from "./component/confetti.vue"
+import confetti from "../component/confetti.vue"
 </script>
 <!-- 引入首页碎纸屑效果 -->
+
 <confetti />
