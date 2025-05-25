@@ -2,6 +2,7 @@
   "devDependencies": {
     "@giscus/vue": "^3.1.1",
     "inquirer": "^12.5.2",
+    "medium-zoom": "^1.1.0",
     "prettier": "^3.5.3",
     "vitepress": "^1.6.3"
   },

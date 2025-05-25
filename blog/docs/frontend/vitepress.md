@@ -259,9 +259,13 @@ git push -u origin main
 ### 部署&自动发布
 
 1. 打开仓库：选择Settings -> Pages -> Source -> Github Actions
+   ![github部署](/publish01.png)
 2. 设置工作流：Actions -> set up a workflow yourself
+   ![github部署](/publish02.png)
 3. 复制 [VitePress官方文档](https://vitejs.cn/vitepress/guide/deploy#github-pages) 脚本到内容区域，并重命名文件deploy.yml
+   ![github部署](/publish03.png)
 4. 等待15秒左右，就可以在Settings -> Pages中看到域名了
+   ![github部署](/publish04.png)
 5. 这样就可以push代码以后，自动发布了，无需过多操作
 
 ## 插件优化
