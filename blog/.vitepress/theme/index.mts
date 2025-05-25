@@ -14,7 +14,7 @@ export default {
   },
   extends: Theme,
   enhanceApp({ app }) {},
-
+  // 图片放大
   setup() {
     const route = useRoute()
     const initZoom = () => {
