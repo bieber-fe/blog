@@ -6,7 +6,7 @@
 - 前端技术
   ├─ JavaScript/TypeScript
   ├─ CSS/预处理器（Sass/Less）
-  ├─ 框架（React/Vue/Svelte）
+  ├─ 框架（React/Vue）
   ├─ 工程化（Webpack/Vite）
   └─ 性能优化
 

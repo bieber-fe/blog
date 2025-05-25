@@ -22,6 +22,7 @@ export default defineConfig({
     sidebar,
     outline: {
       label: '目录',
+      level: [2, 4],
     },
     search: {
       provider: 'local',

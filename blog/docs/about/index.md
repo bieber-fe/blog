@@ -16,5 +16,5 @@
 ## 关于我
 
  - GitHub：https://github.com/bieber-fe
- - Gitee：https://gitee.com/fe-bieber
+ - Gitee：https://gitee.com/bieber-fe
  - 掘金：https://juejin.cn/user/254742426300760/posts
