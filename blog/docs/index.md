@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: 'BieFlow'
+  name: 'BiebFlow'
   text: '这个知识库不是收藏夹，是「知识外挂」'
   tagline: 🚀 随时召唤，拒绝白学
   image:

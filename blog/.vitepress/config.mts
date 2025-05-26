@@ -3,7 +3,7 @@ import { nav, sidebar } from '../router/index'
 
 export default defineConfig({
   lang: 'zh-Hans',
-  title: 'BieFlow知识库',
+  title: 'Bieber的知识库',
   description: 'A VitePress Site',
   base: '/blog/',
   srcDir: 'docs', // 源目录
@@ -17,7 +17,7 @@ export default defineConfig({
     ],
   ],
   themeConfig: {
-    // logo: '/code.png',
+    logo: '/code.png',
     nav,
     sidebar,
     outline: {
