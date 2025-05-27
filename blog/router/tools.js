@@ -14,7 +14,10 @@ const toolsSidebar = {
     {
       text: '效率工具',
       collapsed: true,
-      items: [{ text: 'Bash脚本编程', link: '/tools/bash' }],
+      items: [
+        { text: '「 Bash 」脚本编程', link: '/tools/bash' },
+        { text: '「 Git 」命令与规范', link: '/tools/git' },
+      ],
     },
   ],
 }
