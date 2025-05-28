@@ -17,6 +17,7 @@ const toolsSidebar = {
       items: [
         { text: '「 Bash 」脚本编程', link: '/tools/bash' },
         { text: '「 Git 」命令与规范', link: '/tools/git' },
+        { text: '「 Vim 」高效开发', link: '/tools/vscode-vim' },
       ],
     },
   ],
