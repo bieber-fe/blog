@@ -30,7 +30,7 @@ const feSidebar = {
     {
       text: '工程化',
       collapsed: false,
-      items: [{ text: '「 Git 」提交规范与校验', link: '/frontend/git-commit' }]
+      items: [{ text: '「 Git 」提交规范/代码校验', link: '/frontend/git-commit' }]
     },
     {
       text: '性能优化',
