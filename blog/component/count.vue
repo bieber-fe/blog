@@ -1,8 +1,4 @@
 <script setup>
-defineOptions({
-  name: 'countMode'
-})
-
 import { ref } from 'vue'
 
 const num = ref(123)

@@ -36,3 +36,25 @@ $ echo 'npx lint-staged' > .husky/pre-commit
 ### 前置
 
 ### 命令行交互式版
+
+1. 安装依赖
+
+   ```bash
+   $ npm install --save-dev @commitlint/config-conventional @commitlint/cli
+
+   ```
+
+2. 创建配置文件 `.commitlintrc.js`
+
+   ```bash
+   export default {
+     extends: ['@commitlint/config-conventional']
+   }
+
+   ```
+3. 配置 Husky 钩子
+   ```bash
+   $ echo 'npx --no -- commitlint --edit "$1"' > .husky/commit-msg
+
+   ```
+### 命令行交互式版
