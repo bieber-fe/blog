@@ -1,15 +1,19 @@
 <script setup>
-import { ref } from "vue";
+defineOptions({
+  name: 'countMode'
+})
 
-const num = ref(123);
+import { ref } from 'vue'
+
+const num = ref(123)
 </script>
 
 <template>
-    <div class="add">{{ num }}</div>
+  <div class="add">{{ num }}</div>
 </template>
 
 <style>
 .add {
-    color: red;
+  color: red;
 }
 </style>
