@@ -7,6 +7,11 @@
   "endOfLine": "lf",
   "htmlWhitespaceSensitivity": "css",
   "trailingComma": "none",
-  "useTabs": false
-  
+  "useTabs": false,
+  "overrides": [
+    {
+      "files": "*.md",
+      "options": {"parser":"markdown"}
+    }
+  ]
 }

@@ -33,9 +33,7 @@ $ echo 'npx lint-staged' > .husky/pre-commit
 
 ## 校验提交信息
 
-### 前置
-
-### 命令行交互式版
+### 乞丐版
 
 1. 安装依赖
 
@@ -52,9 +50,106 @@ $ echo 'npx lint-staged' > .husky/pre-commit
    }
 
    ```
+
 3. 配置 Husky 钩子
+
    ```bash
    $ echo 'npx --no -- commitlint --edit "$1"' > .husky/commit-msg
 
    ```
+
 ### 命令行交互式版
+
+1. 安装依赖
+
+   ```bash
+   $ npm install commitizen cz-vinyl --dev
+
+   ```
+
+2. 配置package.json
+
+   ```json
+   {
+      "script": {
+         ...
+         "cz": "git-cz",
+      },
+      "config": {
+         "commitizen": {
+            "path": "cz-vinyl"
+         }
+      }
+   }
+   ```
+
+3. 执行
+
+   ```bash
+   $ npm run cz
+
+   ```
+
+   这样就能直接触发命令行交互式提交了
+
+4. 汉化命令行交互
+
+   根目录添加文件`.czvinylrc`
+
+   ```json
+   {
+      "headerFormat": "{type}({scope}): [{ticket_id}] {subject}",
+      "commitTypes": [
+         {
+            "description": "一个新的功能",
+            "value": "feat"
+         },
+         {
+            "description": "一个BUG修复",
+            "value": "fix"
+         },
+         {
+            "description": "代码样式/风格调整",
+            "value": "style"
+         },
+         {
+            "description": "代码重构(既不增加新功能，也不是修复bug)",
+            "value": "refactor"
+         },
+         {
+            "description": "提高性能的代码更改",
+            "value": "perf"
+         },
+
+         {
+            "description": "文档更新/注释",
+            "value": "docs"
+         },
+         {
+            "description": "测试相关",
+            "value": "test"
+         },
+         {
+            "description": "构建/打包相关变更",
+            "value": "build"
+         },
+         {
+            "description": "代码回退",
+            "value": "revert"
+         },
+         {
+            "description": "辅助工具更改或者无法分类的提交",
+            "value": "chore"
+         },
+      ],
+      "skipScope": false,·
+      "skipTicktId": true, // 跳过tickid
+      "subjectMaxLength": 70,
+      "subjectMinLength": 3,
+      "typeQuestion": "请选择一个提交类型：",
+      "scopeQuestion": "请输入一个改动范围（可跳过）：",
+      "subjectQuestion": "请输入一个提交信息：",
+      "bodyQuestion": "请输入一个提交详细内容（可跳过）："
+   }
+
+   ```
