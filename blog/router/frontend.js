@@ -5,7 +5,7 @@ const feNav = {
   items: [
     { text: 'JavaScript', link: '/api-examples' },
     { text: 'CSS/预处理器', link: '/frontend/reset' },
-    { text: '框架', link: '/frontend/vitepress' },
+    { text: '框架', link: '/frontend/vue3' },
     { text: '工程化', link: '/frontend/git-commit' },
     { text: '性能优化', link: '/api-examples' }
   ]
@@ -25,7 +25,10 @@ const feSidebar = {
     {
       text: '框架',
       collapsed: false,
-      items: [{ text: '「 VitePress 」搭建个人博客', link: '/frontend/vitepress' }]
+      items: [
+        { text: '「 Vue3 」使用手册', link: '/frontend/vue3' },
+        { text: '「 VitePress 」搭建个人博客', link: '/frontend/vitepress' }
+      ]
     },
     {
       text: '工程化',

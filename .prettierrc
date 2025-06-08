@@ -1,4 +1,5 @@
 {
+  "vueIndentScriptAndStyle": false,
   "printWidth": 100,
   "semi": false,
   "singleQuote": true,
@@ -11,7 +12,9 @@
   "overrides": [
     {
       "files": "*.md",
-      "options": {"parser":"markdown"}
+      "options": {
+        "parser": "markdown"
+      }
     }
   ]
 }
