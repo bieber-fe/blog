@@ -5,7 +5,7 @@
   "singleQuote": true,
   "tabWidth": 2,
   "proseWrap": "preserve",
-  "endOfLine": "lf",
+  "endOfLine": "auto",
   "htmlWhitespaceSensitivity": "css",
   "trailingComma": "none",
   "useTabs": false,
