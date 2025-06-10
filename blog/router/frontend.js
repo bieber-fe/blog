@@ -27,6 +27,7 @@ const feSidebar = {
       collapsed: false,
       items: [
         { text: '「 Vue3 」使用手册', link: '/frontend/vue3' },
+        { text: '「 TypeScript 」使用手册', link: '/frontend/typescript' },
         { text: '「 VitePress 」搭建个人博客', link: '/frontend/vitepress' }
       ]
     },
