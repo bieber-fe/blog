@@ -1,5 +1,37 @@
 # TypeScript 使用手册
 
+## 编译TypeScript
+
+:::tip
+浏览器不能直接运行 TypeScript 代码，需要编译为 JavaScript 再交由浏览器解析器执行
+:::
+
+### 命令行编译
+
+- 全局安装 TypeScript
+  ```bash
+  $ npm install typescript -g
+  ```
+- 使用命令编译.ts文件
+  ```bash
+  $ tsc demo.ts
+  ```
+
+### 自动化编译
+
+- 创建 TypeScript 编译控制文件
+  ```bash
+  $ tsc --init
+  ```
+- 监视目录中的.ts文件变化
+  ```bash
+  $ tsc --watch
+  ```
+- 小优化，当编译出错时不生产.js文件
+  ```bash
+  $ tsc --noEmitOnError --watch
+  ```
+
 ## 常用类型与语法
 
 ### interface(接口)
