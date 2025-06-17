@@ -96,11 +96,7 @@ app.use(pinia)
        return {
          num: 123
        }
-     },
-     // 动作
-     action: {},
-     // 计算
-     getters: {}
+     }
    })
    ```
 
@@ -140,9 +136,99 @@ export const useCountStore = defineStore('count', {
         this.sum += value
       }
     }
+  }
+})
+```
+
+### storeToRefs
+
+> 使用 `storeToRefs` 来解构对象，只包装 `state` 中的值，从而不失数据的响应式。
+>
+> `toRef` 也能使数据不失响应式。但影响范围大，会把 `store` 中所有都包装，不建议使用
+
+```vue
+<script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useCountStore } from '@/store/count'
+
+const countStore = useCountStore()
+
+const { sum } = storeToRefs(countStore)
+</script>
+```
+
+### getters
+
+> 当 `state` 中的数据，需要经过处理后在再使用时，可以使用 `getters` 配置
+
+追加 `getters` 配置
+
+```ts
+import { defineStore } from 'pinia'
+
+export const useCountStore = defineStore('count', {
+  // 状态
+  state() {
+    return {
+      sum: 123,
+      school: '第一中学',
+      address: '北京'
+    }
+  },
+  // 动作
+  action: {
+    increment(value: number) {
+      if (this.sum < 10) {
+        this.sum += value
+      }
+    }
   },
   // 计算
-  getters: {}
+  getters: {
+    bigSum: (state): number => state.sum * 10,
+    upperSchool(): string {
+      return this.school.toUpperCase()
+    }
+  }
+})
+```
+
+### 订阅 `$subscribe` 的使用
+
+```vue
+<script setup lang="ts">
+import { useCountStore } from 'pinia'
+
+const countStore = useCountStore()
+// 监听pinia中数据变化（相当于watch）
+countStore.$subscribe((mutate, state) => {
+  console.log('countStore里保存的数据发生了变化')
+  // 能做什么？
+  localStorage.setItem('count', JSON.stringify(state.countStore.num))
+})
+</script>
+```
+
+### store组合式写法
+
+```ts
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+
+export const useCountStore = defineStore('count', () => {
+  // state
+  const sum = ref(123)
+  const school = ref('第一中学')
+  const address = ref('北京')
+
+  // 相当于action
+  function increment(value: number) {
+    if (sum.value < 500) {
+      sum.value += value
+    }
+  }
+
+  return { sum, increment }
 })
 ```
 
