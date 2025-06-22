@@ -18,7 +18,7 @@ $ git config --list
 # 初始化仓库
 $ git init
 # 克隆仓库
-$ git clone [url]
+$ git clone [远程仓库地址]
 # 将已存在的项目添加到Git版本控制中
 $ git add .
 $ git commit -m "first commit"
