@@ -19,6 +19,13 @@ $ git config --list
 $ git init
 # 克隆仓库
 $ git clone [url]
+# 将已存在的项目添加到Git版本控制中
+$ git add .
+$ git commit -m "first commit"
+$ git remote add origin [远程仓库地址]
+$ git push -u origin main
+# 若远程仓库已存在内容,可以执行以下命令解决冲突
+$ git pull --rebase origin main
 ```
 
 ### 日常开发流程
