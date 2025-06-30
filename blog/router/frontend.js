@@ -3,7 +3,7 @@
 const feNav = {
   text: '前端技术',
   items: [
-    { text: 'JavaScript', link: '/api-examples' },
+    { text: 'JavaScript', link: '/frontend/code' },
     { text: 'CSS/预处理器', link: '/frontend/reset' },
     { text: '框架', link: '/frontend/vue3' },
     { text: '工程化', link: '/frontend/git-commit' },
@@ -15,7 +15,7 @@ const feSidebar = {
     {
       text: 'JavaScript',
       collapsed: false,
-      items: [{ text: 'demo1', link: '/api-examples' }]
+      items: [{ text: '手写代码', link: '/frontend/code' }]
     },
     {
       text: 'CSS/预处理器',
