@@ -15,7 +15,10 @@ const feSidebar = {
     {
       text: 'JavaScript',
       collapsed: false,
-      items: [{ text: '手写代码', link: '/frontend/code' }]
+      items: [
+        { text: '手写代码', link: '/frontend/code' },
+        { text: 'Promise 相关方法实现', link: '/frontend/promise-code' }
+      ]
     },
     {
       text: 'CSS/预处理器',
