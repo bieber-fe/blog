@@ -113,13 +113,62 @@ Function.prototype._bind = function (context) {
 ### 7. 实现一个 `debounce` 防抖函数
 
 ```js
+/**
+ * 防抖函数
+ * @param {Function} fn 目标函数
+ * @param {number} wait 延迟时间（毫秒）
+ * @param {boolean} immediate 是否立即执行
+ * @return {Function} 返回防抖处理后的函数
+ */
 
+function debounce(fn, wait = 300, immediate = false) {
+  let timer = null
+  let result
+  const debounced = function (...args) {
+    const that = this
+    // 清除已有定时器
+    if (timer) clearTimeout(timer)
+    // 立即执行模式
+    if (immediate) {
+      const callNow = !timer
+      timer = setTimeout(() => {
+        timer = null
+      }, wait)
+      if (callNow) result = fn.apply(that, args)
+    }
+    // 延迟执行模式
+    else {
+      timer = setTimeout(() => {
+        fn.apply(that, args)
+      }, wait)
+    }
+    return result
+  }
+}
+
+// 添加取消功能
+debounce.cancel = function (debounceFn) {
+  if (debounceFn && debounceFn.timer) {
+    clearTimeout(debounceFn.timer)
+    debounceFn.timer = null
+  }
+}
 ```
 
 ### 8. 实现一个 `throttler` 节流函数
 
 ```js
-
+function throttler(fn, wait = 300) {
+  let timer = null
+  return function (...args) {
+    if (!timer) {
+      timer = setTimeout(() => {
+        fn.apply(this, args)
+        timer = null
+      }, wait)
+    }
+  }
+}
 ```
 
 ### 9. 实现一个 `uniqueArray` 数组去重
