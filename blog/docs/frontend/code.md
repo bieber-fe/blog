@@ -206,51 +206,345 @@ Array.prototype._flat = function (deep = 1) {
 }
 ```
 
-### 11. 实现 `EventEmitter` 发布订阅
+### 11. 实现一个可迭代的对象
 
 ```js
-class EventEmitter {
-  constructor() {
-    this.events = {}
+const CountIoN = {
+  [Symbol.iterator]() {
+    let current = 1
+    const max = 5
+    return {
+      next() {
+        if (current <= max) {
+          return { value: current++, done: false }
+        }
+        return { value: undefined, done: true }
+      }
+    }
+  }
+}
+
+// 测试
+for (const num of CountIoN) {
+  console.log(num) // 输出：1，2，3，4，5
+}
+```
+
+### 12. 实现继承
+
+:::details 寄生组合继承
+
+```js
+function Parent(name) {
+  this.name = name
+  return this
+}
+
+Parent.prototype.getName = function () {
+  return this.name
+}
+Parent.prototype.info = {
+  male: 'man'
+}
+
+function Children(age, name) {
+  Parent.call(this, name)
+  this.age = age
+}
+
+Children.prototype = Object.create(Parent.prototype)
+Children.prototype.constructor = Children
+
+// 示例
+const child1 = new Children(1, 'Tom')
+const child2 = new Children(2, 'Jact')
+
+console.log(child1.name)
+console.log(child2.name)
+console.log(child2.info)
+console.log(child2.getName())
+```
+
+:::
+
+:::details ES6 Class类继承
+
+```js
+class Parent {
+  constructor(name) {
+    this.name = name
   }
 
-  // 订阅事件
-  on(eventName, cb) {
-    if (!this.events[eventName]) {
-      this.events[eventName] = []
-    }
-    this.events[eventName].push(cb)
+  getName() {
+    return this.name
+  }
+}
+
+class Children extends Parent {
+  constructor(age, name) {
+    super(name)
+    this.age = age
   }
 
-  // 取消订阅
-  off(eventName, cb) {
-    if (!this.events[eventName]) return
-    if (!cb) {
-      this.events[eventName] = null
+  getInfo() {
+    return `${this.name}-${this.age}`
+  }
+}
+
+// 示例
+const child = new Children(12, 'Jack')
+console.log(child.getName())
+console.log(child.getInfo())
+```
+
+:::
+
+### 13. 实现 `sleep` 函数
+
+```js
+function sleep(delay) {
+  return function () {
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, delay)
+    })
+  }
+}
+
+// 测试
+let promise = new Promise(function (rs, rj) {
+  console.log('do something')
+  rs()
+})
+  .then(sleep(2000))
+  .then(function () {
+    console.log('after sleep 2000')
+  })
+```
+
+### 14. 实现带 取消功能的`sleep` 函数
+
+> 实现原理：利用Promise.race方法不管哪个promise先执行完promise都fulfilled的特点，中途调用sleep.cancel()
+> 方法提前完成另外一个promise，从而使原本需要异步执行的promise失效
+
+```js
+function sleep(delay) {
+  let _cancel = null
+  const p1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('这是正常的结果')
+    }, delay)
+  })
+  const p2 = new Promise((resolve, reject) => {
+    // 这里是cancel方法
+    _cancel = function () {
+      resolve('这是取消的resolve结果')
     }
-    this.events[eventName].filter((fn) => fn !== cb)
+  })
+  const race = Promise.race([p1, p2])
+  // 返回结果上绑定一个cancel方法
+  race.cancel = _cancel
+  return race
+}
+
+// 测试
+const p = sleep(5000)
+p.then((res) => {
+  console.log(res)
+})
+p.cancel()
+```
+
+### 14. 函数柯里化
+
+```js
+const currying = (fn, ...args) => {
+  return (...subArgs) => {
+    const allArgs = [...args, ...subArgs]
+    if (allArgs.length < fn.length) {
+      return currying(fn, ...allArgs)
+    } else {
+      return fn(...allArgs)
+    }
+  }
+}
+
+// 测试
+const sum = (a, b, c, d) => a + b + c + d
+console.log(currying(sum, 1)(2)(3, 4))
+```
+
+### 15. 实现一个 `compose` 组合函数
+
+```js
+const _compose = (...fns) => {
+  return (...args) => {
+    return fns.reduceRight(
+      (pre, cur) => {
+        return cur(pre)
+      },
+      ...args
+    )
+  }
+}
+
+// 测试
+const add = (x) => x + 1
+const double = (x) => x * 2
+console.log(_compose(double, add)(5))
+```
+
+### 16. 惰性函数
+
+> 惰性函数就是解决每次都要进行判断的这个问题
+
+```js
+// 简化写法
+function addEvent(type, el, fn) {
+  // 问题在于每当使用一次 addEvent 时都会进行一次判断。
+  if (window.addEventListener) {
+    el.addEventListener(type, fn, false)
+  } else if (window.attachEvent) {
+    el.attachEvent('on' + type, fn)
+  }
+}
+
+// 利用惰性函数
+function addEvent(type, el, fn) {
+  if (window.addEventListener) {
+    addEvent = function (type, el, fn) {
+      el.addEventListener(type, fn, false)
+    }
+  } else if (window.attachEvent) {
+    addEvent = function (type, el, fn) {
+      el.attachEvent('on' + type, fn)
+    }
+  }
+}
+
+// 也可以使用闭包
+var addEvent = (function () {
+  if (window.addEventListener) {
+    return function (type, el, fn) {
+      el.addEventListener(type, fn, false)
+    }
+  } else if (window.attachEvent) {
+    return function (type, el, fn) {
+      el.attachEvent('on' + type, fn)
+    }
+  }
+})()
+```
+
+### 17. 实现 `JSONP`
+
+```js
+// 生成随机回调函数名
+function generateCallbackName() {
+  return 'jsonp_' + Math.random().toString(36).substr(2)
+}
+
+// JSONP请求函数
+function jsonp(url, callback) {
+  const callbackName = generateCallbackName()
+  // 创建全局回调函数
+  window[callbackName] = function (data) {
+    callback(data)
+    delete window[callbackName]
+    document.body.removeChild(script)
   }
 
-  // 发布事件
-  emit(eventName, ...args) {
-    if (!this.events[eventName]) {
-      throw new Error(`${eventName} event is not registered`)
-    }
-    this.events[eventName].forEach((fn) => fn(...args))
-  }
+  // 创建script标签
+  const script = document.createElement('script')
+  script.src = `${url}?callback=${callbackName}`
+  document.body.appendChild(script)
+}
 
-  // 一次性订阅
-  once(eventName, cb) {
-    const func = (...args) => {
-      cb.apply(this, args)
-      this.off(eventName, func)
-    }
-    this.on(eventName, func)
+// 使用示例
+jsonp('http://localhost:8000/api', function (data) {
+  console.log('收到数据:', data)
+})
+```
+
+### 18. 图片懒加载
+
+```js
+// <img src="./load.png" data-src="" />
+function _observerImg() {
+  // 获取所有的图片元素
+  let imgList = document.getElementsByTagName('img')
+  let observer = new IntersectionObserver((list) => {
+    // 回调是数组
+    list.forEach((item) => {
+      // 判断元素是否出现在视口
+      if (item.intersectionRatio > 0) {
+        item.target.src = item.target.getAttribute('data-src')
+        // 设置src属性后，停止监听
+        observer.unobserve(item.target)
+      }
+    })
+  })
+
+  // 监听每个img元素
+  for (let i = 0; i < imgList.length; i++) {
+    observer.observer(imgList[i])
   }
 }
 ```
 
-### 12. 封装一个 `Ajax` 请求
+### 19. 判断元素是否达到可视区域
+
+:::details 方法一
+
+```js
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    console.log(entry)
+    if (entry.isIntersecting) {
+      console.log('在可视区域')
+    } else {
+      console.log('不在')
+    }
+  })
+})
+
+// 示例
+const targetElement = document.querySelector('#myElement')
+observer.observe(targetElement)
+```
+
+:::
+
+:::details 方法二
+
+```js
+function isInViewport(element) {
+  const clientHeight = window.innerHeight || document.documentElement.clientHeight
+  const offsetTop = element.offsetTop
+  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+  console.log(offsetTop, scrollTop, clientHeight)
+  if (offsetTop - scrollTop <= clientHeight) {
+    console.log('进入可视区域')
+  }
+}
+
+// 示例
+const targetElement = document.querySelector('.name04')
+
+let ticking = false
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      isInViewport(targetElement)
+      ticking = false
+    })
+    ticking = true
+  }
+})
+```
+
+:::
+
+### 20. 封装一个 `Ajax` 请求
 
 ```js
 function ajax(options) {
@@ -312,5 +606,49 @@ function ajax(options) {
       }
     }
   })
+}
+```
+
+### 21. 实现 `EventEmitter` 发布订阅
+
+```js
+class EventEmitter {
+  constructor() {
+    this.events = {}
+  }
+
+  // 订阅事件
+  on(eventName, cb) {
+    if (!this.events[eventName]) {
+      this.events[eventName] = []
+    }
+    this.events[eventName].push(cb)
+  }
+
+  // 取消订阅
+  off(eventName, cb) {
+    if (!this.events[eventName]) return
+    if (!cb) {
+      this.events[eventName] = null
+    }
+    this.events[eventName].filter((fn) => fn !== cb)
+  }
+
+  // 发布事件
+  emit(eventName, ...args) {
+    if (!this.events[eventName]) {
+      throw new Error(`${eventName} event is not registered`)
+    }
+    this.events[eventName].forEach((fn) => fn(...args))
+  }
+
+  // 一次性订阅
+  once(eventName, cb) {
+    const func = (...args) => {
+      cb.apply(this, args)
+      this.off(eventName, func)
+    }
+    this.on(eventName, func)
+  }
 }
 ```
