@@ -518,6 +518,22 @@ observer.observe(targetElement)
 
 ```js
 function isInViewport(element) {
+  const rect = element.getBoundingClientRect()
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  )
+}
+```
+
+:::
+
+:::details 方法三
+
+```js
+function isInViewport(element) {
   const clientHeight = window.innerHeight || document.documentElement.clientHeight
   const offsetTop = element.offsetTop
   const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
