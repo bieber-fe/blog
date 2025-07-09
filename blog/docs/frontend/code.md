@@ -43,7 +43,34 @@ function _new(fn, ...args) {
 }
 ```
 
-### 4. 实现一个 `call` 函数
+### 4. 实现一个 Object.create()
+
+```js
+function create(proto, propertiesObject) {
+  if (typeof proto !== 'object' && typeof proto !== 'function') {
+    throw new TypeError('Object prototype may only be an Object or null')
+  }
+  if (propertiesObject === null) {
+    throw new TypeError('Cannot convert undefined or null to object')
+  }
+
+  function F() {}
+
+  F.prototype = proto
+  const obj = new F()
+
+  if (propertiesObject !== undefined) {
+    Object.defineProperties(obj, propertiesObject)
+  }
+  if (proto === null) {
+    obj.__proto = null
+  }
+
+  return obj
+}
+```
+
+### 5. 实现一个 `call` 函数
 
 ```js
 Function.prototype._call = function (context, ...args) {
@@ -65,7 +92,7 @@ Function.prototype._call = function (context, ...args) {
 }
 ```
 
-### 5. 实现一个 `apply` 函数
+### 6. 实现一个 `apply` 函数
 
 ```js
 Function.prototype._apply = function (context) {
@@ -82,7 +109,7 @@ Function.prototype._apply = function (context) {
 }
 ```
 
-### 6. 实现一个 `bind` 函数
+### 7. 实现一个 `bind` 函数
 
 ```js
 Function.prototype._bind = function (context) {
@@ -110,7 +137,7 @@ Function.prototype._bind = function (context) {
 }
 ```
 
-### 7. 实现一个 `debounce` 防抖函数
+### 8. 实现一个 `debounce` 防抖函数
 
 ```js
 /**
@@ -155,7 +182,7 @@ debounce.cancel = function (debounceFn) {
 }
 ```
 
-### 8. 实现一个 `throttler` 节流函数
+### 9. 实现一个 `throttler` 节流函数
 
 ```js
 function throttler(fn, wait = 300) {
@@ -171,7 +198,71 @@ function throttler(fn, wait = 300) {
 }
 ```
 
-### 9. 实现一个 `uniqueArray` 数组去重
+### 10. 实现数组的原生方法 `Map`、`Filter`、`Reduce`
+
+:::details Map
+
+```js
+Array.prototype._map = function (callback) {
+  const result = []
+  for (let i = 0; i < this.length; i++) {
+    result.push(callback(this[i], i, this))
+  }
+  return result
+}
+
+// 使用示例
+const numbers = [1, 2, 3]
+const doubled = numbers._map((num) => num * 2)
+console.log(doubled) // 输出: [2, 4, 6]
+```
+
+:::
+
+:::details Filter
+
+```js
+Array.prototype._filter = function (callback) {
+  const result = []
+  for (let i = 0; i < this.length; i++) {
+    if (callback(this[i], i, this)) {
+      result.push(this[i])
+    }
+  }
+  return result
+}
+
+// 使用示例
+const numbers = [1, 2, 3, 4, 5]
+const evens = numbers._filter((num) => num % 2 === 0)
+console.log(evens) // 输出: [2, 4]
+```
+
+:::
+
+:::details Reduce
+
+```js
+Array.prototype._reduce = function (callback, initiaValue) {
+  let accumulator = initiaValue !== undefined ? initiaValue : this[0]
+  let startIndex = initiaValue !== undefined ? 0 : 1
+
+  for (let i = startIndex; i < this.length; i++) {
+    accumulator = callback(accumulator, this[i], i, this)
+  }
+
+  return accumulator
+}
+
+// 使用示例
+const numbers = [1, 2, 3, 4]
+const sum = numbers._reduce((acc, num) => acc + num, 0)
+console.log(sum) // 输出: 10
+```
+
+:::
+
+### 11. 实现一个 `uniqueArray` 数组去重
 
 ```js
 // 方法1:
@@ -194,7 +285,7 @@ function uniqueArray(arr) {
 }
 ```
 
-### 10. 实现一个 `flat` 数组扁平化
+### 12. 实现一个 `flat` 数组扁平化
 
 ```js
 Array.prototype._flat = function (deep = 1) {
@@ -206,7 +297,26 @@ Array.prototype._flat = function (deep = 1) {
 }
 ```
 
-### 11. 实现一个可迭代的对象
+### 13. 实现一个 faltObj 对象扁平化
+
+```js
+function falttenObj(obj, parentKey = '', result = {}) {
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      let newKey = parentKey ? `${parentKey}.${key}` : key
+
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+        falttenObj(obj[key], newKey, result)
+      } else {
+        result[key] = obj[key]
+      }
+    }
+  }
+  return result
+}
+```
+
+### 14. 实现一个可迭代的对象
 
 ```js
 const CountIoN = {
@@ -230,7 +340,7 @@ for (const num of CountIoN) {
 }
 ```
 
-### 12. 实现继承
+### 15. 实现继承
 
 :::details 寄生组合继承
 
@@ -299,7 +409,7 @@ console.log(child.getInfo())
 
 :::
 
-### 13. 实现 `sleep` 函数
+### 16. 实现 `sleep` 函数
 
 ```js
 function sleep(delay) {
@@ -321,7 +431,7 @@ let promise = new Promise(function (rs, rj) {
   })
 ```
 
-### 14. 实现带 取消功能的`sleep` 函数
+### 17. 实现带 取消功能的`sleep` 函数
 
 > 实现原理：利用Promise.race方法不管哪个promise先执行完promise都fulfilled的特点，中途调用sleep.cancel()
 > 方法提前完成另外一个promise，从而使原本需要异步执行的promise失效
@@ -354,7 +464,7 @@ p.then((res) => {
 p.cancel()
 ```
 
-### 14. 函数柯里化
+### 18. 函数柯里化
 
 ```js
 const currying = (fn, ...args) => {
@@ -373,7 +483,7 @@ const sum = (a, b, c, d) => a + b + c + d
 console.log(currying(sum, 1)(2)(3, 4))
 ```
 
-### 15. 实现一个 `compose` 组合函数
+### 19. 实现一个 `compose` 组合函数
 
 ```js
 const _compose = (...fns) => {
@@ -393,7 +503,7 @@ const double = (x) => x * 2
 console.log(_compose(double, add)(5))
 ```
 
-### 16. 惰性函数
+### 20. 惰性函数
 
 > 惰性函数就是解决每次都要进行判断的这个问题
 
@@ -435,7 +545,7 @@ var addEvent = (function () {
 })()
 ```
 
-### 17. 实现 `JSONP`
+### 21. 实现 `JSONP`
 
 ```js
 // 生成随机回调函数名
@@ -465,7 +575,7 @@ jsonp('http://localhost:8000/api', function (data) {
 })
 ```
 
-### 18. 图片懒加载
+### 22. 图片懒加载
 
 ```js
 // <img src="./load.png" data-src="" />
@@ -491,7 +601,7 @@ function _observerImg() {
 }
 ```
 
-### 19. 判断元素是否达到可视区域
+### 23. 判断元素是否达到可视区域
 
 :::details 方法一
 
@@ -560,7 +670,7 @@ window.addEventListener('scroll', () => {
 
 :::
 
-### 20. 封装一个 `Ajax` 请求
+### 24. 封装一个 `Ajax` 请求
 
 ```js
 function ajax(options) {
@@ -625,7 +735,7 @@ function ajax(options) {
 }
 ```
 
-### 21. 实现 `EventEmitter` 发布订阅
+### 25. 实现 `EventEmitter` 发布订阅
 
 ```js
 class EventEmitter {
@@ -666,5 +776,41 @@ class EventEmitter {
     }
     this.on(eventName, func)
   }
+}
+```
+
+### 26. 实现一个深度比较 `deepEqual`
+
+```js
+function deepEqual(a, b) {
+  // 处理基本类型和null / undefined
+  if (a === b) return true
+  if (a === null || b === null || typeof a !== 'object' || typeof b !== 'object') {
+    return a === b
+  }
+  // 处理Date类型
+  if (a instanceof Date && b instanceof Date) {
+    return a.getTime() === b.getTime()
+  }
+  // 处理RegExp类型
+  if (a instanceof RegExp && b instanceof RegExp) {
+    return a.toString() === b.toString()
+  }
+  // 处理数组
+  if (Array.isArray(a) && Array.isArray(b)) {
+    if (a.length !== b.length) return false
+    for (let i = 0; i < a.length; i++) {
+      if (deepEqual(a[i], b[i])) return false
+    }
+    return true
+  }
+  // 处理对象
+  const keysA = Object.keys(a)
+  const keysB = Object.keys(b)
+  if (keysA.length !== keysB.length) return false
+  for (const key of keysA) {
+    if (!keysB.includes(key) || !deepEqual(a[key], b[key])) return false
+  }
+  return true
 }
 ```
