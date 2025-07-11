@@ -11,7 +11,7 @@ const REJECTED = 'rejected'
 
 class MyPromise {
   #state = PENDING
-  #value = undefined
+  #result = undefined
   #handlers = []
 
   constructor(executor) {
@@ -21,7 +21,6 @@ class MyPromise {
     const reject = (reason) => {
       this.#changeState(REJECTED, reason)
     }
-
     try {
       executor(resolve, reject)
     } catch (error) {
@@ -29,14 +28,14 @@ class MyPromise {
     }
   }
 
-  #changeState(state, res) {
+  #changeState(state, val) {
     if (this.#state !== PENDING) return
     this.#state = state
-    this.#value = res
+    this.#result = val
     this.#run()
   }
 
-  // 判断是否为promise
+  // 是否为Promise
   #isPromiseLike(value) {
     if (value !== null && (typeof value === 'object' || typeof value === 'function')) {
       return typeof value.then === 'function'
@@ -44,19 +43,24 @@ class MyPromise {
     return false
   }
 
-  // 放入微队列加载
+  // 执行函数放入微队列
   #runMicroTask(func) {
+    // node 环境
     if (typeof process === 'object' && typeof process.nextTick === 'function') {
-      // node 环境
       process.nextTick(func)
-    } else if (typeof MutationObserver === 'function') {
-      // 浏览器环境
+    }
+    // 浏览器环境
+    else if (typeof MutationObserver === 'function') {
       const ob = new MutationObserver(func)
       const textNode = document.createTextNode('1')
       ob.observe(textNode, {
         characterData: true
       })
       textNode.data = '2'
+    }
+    // 其他环境
+    else {
+      setTimeout(func, 0)
     }
   }
 
@@ -83,7 +87,7 @@ class MyPromise {
   #run() {
     if (this.#state === PENDING) return
     while (this.#handlers.length) {
-      const { resolve, reject, onFulfilled, onRejected } = this.#handlers.shift()
+      const { onFulfilled, onRejected, resolve, reject } = this.#handlers.shift()
       if (this.#state === FULFILLED) {
         this.#runOne(onFulfilled, resolve, reject)
       } else {
@@ -94,16 +98,37 @@ class MyPromise {
 
   then(onFulfilled, onRejected) {
     return new MyPromise((resolve, reject) => {
-      this.#handlers.push({
-        resolve,
-        reject,
-        onFulfilled,
-        onRejected
-      })
+      this.#handlers.push({ onFulfilled, onRejected, resolve, reject })
       this.#run()
     })
   }
 }
+
+// 测试示例
+const p1 = new MyPromise((resolve, reject) => {
+  console.log('resolve')
+  setTimeout(() => {
+    resolve(123)
+  }, 1000)
+})
+p1.then(
+  (res) => {
+    console.log('then 完成1', res)
+    return new MyPromise((resolve, reject) => {
+      reject(456)
+    })
+  },
+  (err) => {
+    console.log('catch 失败1', err)
+  }
+).then(
+  (res) => {
+    console.log('then 完成2', res)
+  },
+  (err) => {
+    console.log('catch 失败2', err)
+  }
+)
 ```
 
 :::
