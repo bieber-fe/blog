@@ -132,3 +132,28 @@ p1.then(
 ```
 
 :::
+
+### 2. 实现promise.all
+
+```js
+Promise._all = function (promises) {
+  promises = [...promises]
+  return new Promise((resolve, reject) => {
+    const result = []
+    if (promises.length === 0) resolve(result)
+
+    let count = 0
+    promises.forEach((item, index) => {
+      Promise.resolve(item)
+        .then((res) => {
+          result[index] = res
+          count++
+          if (count === promises.length) {
+            resolve(result)
+          }
+        })
+        .catch(reject)
+    })
+  })
+}
+```
