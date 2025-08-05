@@ -23,7 +23,10 @@ const feSidebar = {
     {
       text: 'CSS/预处理器',
       collapsed: false,
-      items: [{ text: '样式重置reset.css', link: '/frontend/reset' }]
+      items: [
+        { text: '样式重置reset.css', link: '/frontend/reset' },
+        { text: 'PostCSS 常用插件', link: '/frontend/postcss' }
+      ]
     },
     {
       text: '框架',
